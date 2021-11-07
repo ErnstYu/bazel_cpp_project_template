@@ -1,0 +1,59 @@
+# Bazel configuration file, adapted from the Apollo Project
+
+# +------------------------------------------------------------+
+# | Startup Options                                            |
+# +------------------------------------------------------------+
+startup --batch_cpu_scheduling
+startup --host_jvm_args="-XX:-UseParallelGC"
+
+fetch --experimental_multi_threaded_digest=true
+query --experimental_multi_threaded_digest=true
+
+# +------------------------------------------------------------+
+# | Common Options                                             |
+# +------------------------------------------------------------+
+# Force bazel output to use colors and print useful errors.
+common --color=yes
+
+# Enable colorful output of gcc and clang
+build --cxxopt="-fdiagnostics-color=always"
+
+# Protect the external cache from being polluted by changes to the input files
+# during a build.
+common --experimental_guard_against_concurrent_changes
+
+# Force producing PIC code to spare some build time.
+build --force_pic
+
+# +------------------------------------------------------------+
+# | Build Configurations                                       |
+# +------------------------------------------------------------+
+build --crosstool_top="//tools/toolchains:clang_toolchain"
+build --compiler=clang
+
+# Work around the sandbox issue.
+build --spawn_strategy=standalone
+
+# Do not show warnings from external dependencies.
+build --output_filter="^//"
+
+# CPU configuration
+build:cpu --verbose_failures
+build:cpu --define cpu_only=true
+build:cpu --copt="-DQ_CPU_ONLY=1"
+
+# +------------------------------------------------------------+
+# | Test Configurations                                        |
+# +------------------------------------------------------------+
+test --build_tests_only
+test --test_output=errors
+test --test_verbose_timeout_warnings
+test --test_summary=testcase
+
+# Do bazel test --config=nolint <target> to enable only non-cpplint tests.
+test:nolint --test_tag_filters=-cpplint
+test:nolint --flaky_test_attempts=3
+
+# Do bazel test --config=cpplint <target> to enable only cpplint tests.
+test:cpplint --test_tag_filters=cpplint
+test:cpplint --flaky_test_attempts=1

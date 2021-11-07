@@ -1,0 +1,6 @@
+# Bazel
+bazel-*
+.cache/
+
+# VS Code files
+.vscode
