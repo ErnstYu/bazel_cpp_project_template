@@ -12,4 +12,3 @@ TEST(GreetTest, NameCheck) {
 
   EXPECT_EQ(7 * 6, 42);
 }
-
