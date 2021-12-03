@@ -29,13 +29,14 @@ function warning() {
   (echo >&2 -e "[${YELLOW}${BOLD}WARNING${NO_COLOR}] $*")
 }
 
+# Get composite extensions from behind, take the last one on default.
 function file_ext() {
   local filename="$(basename $1)"
   local actual_ext="${filename##*.}"
-  if [[ "${actual_ext}" == "${filename}" ]]; then
-    actual_ext=""
-  fi
-  echo "${actual_ext}"
+  local all_exts
+  IFS="." read -r -a all_exts <<< "$filename"
+  local requested_exts="${all_exts[*]: -${2-1}}"
+  echo "${requested_exts// /\.}"
 }
 
 function c_family_ext() {
@@ -62,7 +63,7 @@ function find_c_cpp_srcs() {
 }
 
 function proto_ext() {
-  if [[ "$(file_ext $1)" == "proto" ]]; then
+  if [[ "$(file_ext $1)" == "proto" || "$(file_ext $1 2)" == "pb.txt" ]]; then
     return 0
   else
     return 1
@@ -70,7 +71,8 @@ function proto_ext() {
 }
 
 function find_proto_srcs() {
-  find "$@" -type f -name "*.proto"
+  find "$@" -type f -name "*.proto" \
+    -or -name "*.pb.txt"
 }
 
 function shell_ext() {

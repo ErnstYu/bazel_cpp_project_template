@@ -1,3 +1,14 @@
 BasedOnStyle: Google
+
+---
 Language: Cpp
 CommentPragmas: '^ NOLINT'
+ColumnLimit: 80
+
+---
+Language: Proto
+ColumnLimit: 80
+
+---
+Language: TextProto
+ColumnLimit: 80

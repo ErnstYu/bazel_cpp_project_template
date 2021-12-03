@@ -67,7 +67,7 @@ function run_format() {
         run_prettier "${arg}"
       fi
     else
-      warning "Ignored ${arg} as not a regular file/directory"
+      warning "Ignored ${arg} as it is not a regular file/directory"
     fi
   done
 }
