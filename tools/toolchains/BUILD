@@ -57,7 +57,7 @@ cc_toolchain_config(
     cxx_builtin_include_directories = [
         "/usr/include",
         "/usr/local/include",
-        "/usr/lib/clang/12.0.1/include",
+        "/usr/lib/clang/13.0.0/include",
     ],
     cxx_flags = [
         "-std=c++17",
@@ -68,12 +68,13 @@ cc_toolchain_config(
     dbg_compile_flags = ["-g"],
     host_system_name = "local",
     link_flags = [
-        "-lstdc++",
-        "-lc++abi",
-        "-rtlib=compiler-rt",
-        "-lpthread",
-        "-lm",
         "-fuse-ld=lld",
+        "-lc++abi",
+        "-lm",
+        "-lpthread",
+        "-lstdc++",
+        "-rtlib=compiler-rt",
+        "-unwindlib=libunwind",
         "-Wl,--build-id=md5",
         "-Wl,--hash-style=gnu",
     ],

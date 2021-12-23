@@ -5,7 +5,7 @@ This is a template for creating a C++ project to work with [bazel](https://bazel
 With the basic building configurations, some commonly used packages and most trivial code examples provided, this template exists in hope of simplifying the start of a new C++ repo to be built with bazel and clang. The template contains the following basic components:
 
 - basic bazel configuration, tested with bazel 4.2.1
-- clang toolchain for bazel, tested with clang 12.0.1, with c++17 enabled by default
+- clang toolchain for bazel, tested with clang 13.0.0, with c++17 enabled by default
 - the following third-party packages:
   - [Abseil](https://github.com/abseil/abseil-cpp) (LTS 20210324.2)
   - [cpplint](https://github.com/cpplint/cpplint) (1.5.5)
